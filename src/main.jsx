@@ -8,6 +8,7 @@ import {
 import Root from './components/root/Root';
 import Header from './components/Header/Header';
 import Login from './components/Login/Login'
+import Register from './components/Register/Register';
 
 const router = createBrowserRouter([
   {
@@ -16,7 +17,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: '/',
-        element: <Login></Login>
+        element: <Register />
       }
     ]
   },

@@ -2,7 +2,8 @@ import { Link } from "react-router-dom";
 
 const Header = () => {
     const nav = <>
-        <Link to='/'><li><a>Login Page</a></li></Link>
+        <Link to='/'><li><a>Register</a></li></Link>
+        <Link to='/login'><li><a>Login Page</a></li></Link>
         <Link to='/others'><li><a>Others</a></li></Link>
     </>
     return (
