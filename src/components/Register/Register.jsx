@@ -1,22 +1,49 @@
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import auth from "../firebase.config/firebase.config";
+import { useState } from "react";
 
 const Register = () => {
+    const [registerError, setRegisterError] = useState('');
+    const [success, setSuccess] = useState('');
     const handleRegister = e => {
         e.preventDefault();
         console.log('btn clicked');
         const email = e.target.email.value;
         const password = e.target.password.value;
         console.log(email, password);
+        if (password.length < 6){
+            setRegisterError('password is less then 6 charecter')
+            return
+        }
+        else if (!/[A-Z]/.test(password)){
+            setRegisterError('you should have at least one upper case charecter');
+            return;
+        }
+        // error message reset 
+        setRegisterError('')
+        // ste success message reset 
+        setSuccess('')
+        createUserWithEmailAndPassword(auth, email, password)
+        .then(result => {console.log(result.user)
+        setSuccess('User created successfully')})
+        .catch(error => setRegisterError(error.message))
     }
     return (
         <>
             <form onSubmit={handleRegister} className="mx-auto border p-4 text-center w-1/2" action="">
-                <h2>Register here</h2>
+                <h2 className="text-xl font-extrabold">Register here</h2>
                 <input className="m-4 p-2 w-3/4" type="email" placeholder="email" name="email" id="register-email" />
                 <br />
                 <input className="m-4 p-2 w-3/4" type="password" placeholder="password" name="password" id="register-password" />
                 <br />
                 <button className="btn btn-success">Submit</button>
             </form>
+            {
+                registerError && <p className="text-red-500 text-center">{registerError}</p>
+            }
+            {
+                success && <p className="text-green-600 text-center">{success}</p>
+            }
         </>
     );
 };
